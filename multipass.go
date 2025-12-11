@@ -17,7 +17,7 @@ import (
 )
 
 // New comment
-func New(secret string) (ctx *Multipass, err error) {
+func New(secret string, location *time.Location) (ctx *Multipass, err error) {
 	if len(secret) == 0 {
 		err = errors.New("Invalid Secret")
 		return nil, err
@@ -34,6 +34,7 @@ func New(secret string) (ctx *Multipass, err error) {
 	ctx = &Multipass{
 		EncryptionKey: key[0:aes.BlockSize],
 		SignatureKey:  key[aes.BlockSize:32],
+		Location:      location,
 	}
 	return ctx, err
 }
@@ -52,7 +53,7 @@ func (ctx *Multipass) Encode(customerInfo map[string]interface{}) (token string,
 
 	// Store the current time in ISO8601 format.
 	// The token will only be valid for a small timeframe around this timestamp.
-	customerInfo["created_at"] = time.Now().Format(TimeISO8601Layout)
+	customerInfo["created_at"] = time.Now().In(ctx.Location).Format(TimeISO8601Layout)
 
 	// Serialize the customer data to JSON and encrypt it
 	var cipherBytes []byte

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	multipass "github.com/claimh-solais/goify-multipass"
+	multipass "github.com/yuta1031/goify-multipass"
 )
 
 const secret = "e2c1dc490fd04ad8bbcc426316196dba"

@@ -1,5 +1,7 @@
 package multipass
 
+import "time"
+
 // TimeISO8601Layout timestamp in ISO8601 encoding
 const TimeISO8601Layout = "2013-04-11T15:16:23-04:00"
 
@@ -15,4 +17,5 @@ const TimeISO8601Layout = "2013-04-11T15:16:23-04:00"
 type Multipass struct {
 	EncryptionKey []byte
 	SignatureKey  []byte
+	Location      *time.Location
 }
